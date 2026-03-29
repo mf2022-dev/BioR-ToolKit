@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bior-platform",
+  "compatibility_date": "2026-03-08",
+  "pages_build_output_dir": "./dist",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "bior-production",
+      "database_id": "13a5f469-caab-4af9-9f2c-01640e8838fd"
+    }
+  ],
+  // Cron triggers for automated report generation (Issue #5)
+  // NOTE: Cloudflare Pages does not support "triggers" config directly.
+  // Cron schedules are configured via:
+  //   1. Manual on-demand generation via POST /api/reports/generate (admin/analyst)
+  //   2. For production automated scheduling, deploy a companion Worker with these crons:
+  //      "0 6 * * 1"  — Weekly Epi Bulletin, every Monday 06:00 UTC
+  //      "0 6 1 * *"  — Monthly AMR Summary, 1st of each month 06:00 UTC
+  //   3. The scheduled() handler in src/index.ts is ready for Worker deployment
+}

@@ -1,0 +1,42 @@
+{
+  "name": "bior-platform",
+  "version": "5.0.0",
+  "type": "module",
+  "description": "BioR - Biological Response Network Platform. D1 Database + Real JWT Auth + Full CRUD.",
+  "scripts": {
+    "dev": "vite",
+    "dev:sandbox": "wrangler pages dev dist --d1=bior-production --local --ip 0.0.0.0 --port 3000",
+    "build:css": "npx @tailwindcss/cli --input src/tailwind-input.css --output public/static/tailwind.css --minify",
+    "build": "npm run build:css && vite build",
+    "build:node": "vite build --config vite.config.node.ts",
+    "build:all": "npm run build && npm run build:node",
+    "start": "node dist-node/server.js",
+    "preview": "wrangler pages dev dist --d1=bior-production --local",
+    "deploy": "npm run build && wrangler pages deploy dist",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
+    "db:migrate:local": "wrangler d1 migrations apply bior-production --local",
+    "db:migrate:prod": "wrangler d1 migrations apply bior-production",
+    "db:seed:local": "wrangler d1 execute bior-production --local --file=./seed.sql",
+    "db:reset": "rm -rf .wrangler/state/v3/d1 && npm run db:migrate:local && npm run db:seed:local",
+    "db:console:local": "wrangler d1 execute bior-production --local",
+    "db:console:prod": "wrangler d1 execute bior-production"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.11",
+    "hono": "^4.12.5"
+  },
+  "devDependencies": {
+    "@hono/vite-build": "^1.2.0",
+    "@hono/vite-dev-server": "^0.18.2",
+    "@tailwindcss/cli": "^4.2.1",
+    "@tailwindcss/postcss": "^4.2.1",
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.1",
+    "vite": "^6.3.5",
+    "wrangler": "^4.74.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

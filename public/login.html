@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - BioR Platform</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      background: #060b14;
+      color: #e5e7eb;
+      overflow-x: hidden;
+    }
+
+    /* ===== LAYOUT — 70 / 30 SPLIT ===== */
+    .login-wrapper {
+      display: grid;
+      grid-template-columns: 70% 30%;
+      min-height: 100vh;
+    }
+
+    /* =================================================================
+       LEFT PANEL (70%) — Branded Showcase
+       ================================================================= */
+    .left-panel {
+      background: linear-gradient(160deg, #003a28 0%, #006241 30%, #00A86B 70%, #00c77b 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 80px;
+    }
+
+    /* Animated floating orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: rgba(255,255,255,0.12);
+      top: -200px; left: -100px;
+      animation: orbFloat1 12s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 450px; height: 450px;
+      background: rgba(0,200,123,0.2);
+      bottom: -150px; right: -50px;
+      animation: orbFloat2 15s ease-in-out infinite;
+    }
+    .orb-3 {
+      width: 300px; height: 300px;
+      background: rgba(255,255,255,0.08);
+      top: 50%; left: 60%;
+      animation: orbFloat3 10s ease-in-out infinite;
+    }
+    @keyframes orbFloat1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(40px, -30px) scale(1.06); }
+      66% { transform: translate(-20px, 20px) scale(0.94); }
+    }
+    @keyframes orbFloat2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-35px, -40px) scale(1.1); }
+    }
+    @keyframes orbFloat3 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(20px, -25px) scale(1.08); }
+    }
+
+    /* Grid pattern overlay */
+    .grid-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.035;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* DNA Helix SVG overlay */
+    .dna-overlay {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .dna-overlay svg { width: 100%; height: 100%; }
+
+    /* ---- Left content ---- */
+    .left-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+    }
+
+    /* Pill badge */
+    .version-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 32px;
+      letter-spacing: 0.02em;
+    }
+    .version-pill .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #00ff88;
+      box-shadow: 0 0 6px #00ff88;
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 6px #00ff88; }
+      50% { opacity: 0.5; box-shadow: 0 0 12px #00ff88; }
+    }
+
+    /* Brand logo */
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .brand-logo-icon {
+      width: 64px; height: 64px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    }
+    .brand-logo-icon i { font-size: 28px; color: #fff; }
+    .brand-logo-text {
+      font-size: 42px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -1px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.15);
+      line-height: 1;
+    }
+    .brand-logo-sub {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    /* Hero headline */
+    .hero-headline {
+      font-size: 40px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    .hero-headline .highlight {
+      background: linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      margin-bottom: 48px;
+      max-width: 560px;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+    .stat-item { text-align: left; }
+    .stat-number {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-number span {
+      font-size: 20px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+    }
+    .stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Feature cards */
+    .features-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px 18px;
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .feature-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      font-size: 16px;
+      color: #fff;
+    }
+    .feature-icon.genomic { background: rgba(16,185,129,0.2); }
+    .feature-icon.threat  { background: rgba(239,68,68,0.2); }
+    .feature-icon.analytics { background: rgba(59,130,246,0.2); }
+    .feature-icon.surveillance { background: rgba(168,85,247,0.2); }
+    .feature-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .feature-desc {
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.5;
+    }
+
+    /* Bottom trust bar */
+    .trust-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0,0,0,0.15);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      z-index: 2;
+    }
+    .trust-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+    }
+    .trust-item i { font-size: 12px; color: rgba(255,255,255,0.35); }
+    .trust-bar-right {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* =================================================================
+       RIGHT PANEL (30%) — Sign-in Form
+       ================================================================= */
+    .right-panel {
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 32px;
+      position: relative;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 340px;
+    }
+
+    .login-header { margin-bottom: 28px; }
+    .login-header h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+    .login-header p {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    /* Form fields */
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .input-wrapper { position: relative; }
+    .input-wrapper input {
+      width: 100%;
+      padding: 12px 40px 12px 40px;
+      background: #f9fafb;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      color: #111827;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+    .input-wrapper input:hover { border-color: #d1d5db; background: #fff; }
+    .input-wrapper input:focus { border-color: #00A86B; background: #fff; box-shadow: 0 0 0 3px rgba(0,168,107,0.1); }
+    .input-wrapper input::placeholder { color: #9ca3af; }
+
+    .input-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: #9ca3af; font-size: 13px; pointer-events: none; transition: color 0.25s ease;
+    }
+    .input-wrapper input:focus ~ .input-icon { color: #00A86B; }
+
+    .eye-toggle {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      color: #9ca3af; cursor: pointer; font-size: 13px; transition: color 0.2s;
+      background: none; border: none; padding: 4px;
+    }
+    .eye-toggle:hover { color: #6b7280; }
+
+    /* Submit button */
+    #loginBtn {
+      width: 100%; padding: 12px;
+      background: linear-gradient(135deg, #00A86B 0%, #008F5B 100%);
+      color: #fff; font-size: 14px; font-weight: 600;
+      font-family: 'Inter', sans-serif; border: none; border-radius: 10px;
+      cursor: pointer; transition: all 0.3s ease;
+      position: relative; overflow: hidden; margin-top: 4px;
+    }
+    #loginBtn:hover {
+      background: linear-gradient(135deg, #00c77b 0%, #00A86B 100%);
+      box-shadow: 0 6px 24px rgba(0,168,107,0.35); transform: translateY(-1px);
+    }
+    #loginBtn:active { transform: translateY(0); }
+    #loginBtn::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transition: left 0.5s ease;
+    }
+    #loginBtn:hover::after { left: 100%; }
+
+    /* Loading state */
+    #loginBtn.loading { pointer-events: none; opacity: 0.8; }
+    #loginBtn .btn-text { transition: opacity 0.2s; }
+    #loginBtn.loading .btn-text { opacity: 0; }
+    #loginBtn .btn-spinner {
+      position: absolute; inset: 0; display: flex; align-items: center;
+      justify-content: center; opacity: 0; transition: opacity 0.2s;
+    }
+    #loginBtn.loading .btn-spinner { opacity: 1; }
+
+    /* Messages */
+    #successMessage, #errorMessage {
+      display: none; align-items: center; gap: 8px; padding: 10px 14px;
+      border-radius: 10px; font-size: 12px; font-weight: 500;
+      margin-bottom: 14px; animation: slideDown 0.3s ease-out;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    #successMessage { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; }
+    #successMessage i { color: #10b981; }
+    #errorMessage { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+    #errorMessage i { color: #ef4444; }
+    #successMessage.show, #errorMessage.show { display: flex; }
+
+    /* Divider */
+    .divider { display: flex; align-items: center; gap: 10px; margin: 22px 0 14px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e5e7eb; }
+    .divider span {
+      font-size: 10px; color: #9ca3af; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+
+    /* Demo accounts */
+    .demo-accounts { display: flex; flex-direction: column; gap: 6px; }
+    .demo-item {
+      display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+      background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 10px;
+      font-size: 12px; cursor: pointer; transition: all 0.25s ease;
+    }
+    .demo-item:hover {
+      background: rgba(0,168,107,0.04); border-color: #00A86B; transform: translateX(3px);
+    }
+    .demo-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 28px; height: 28px; border-radius: 8px;
+      font-size: 10px; font-weight: 700; color: #fff;
+    }
+    .demo-item:nth-child(1) .demo-badge { background: linear-gradient(135deg, #00A86B, #008F5B); }
+    .demo-item:nth-child(2) .demo-badge { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+    .demo-item:nth-child(3) .demo-badge { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+
+    .demo-role { font-weight: 600; color: #111827; min-width: 52px; }
+    .demo-user { color: #6b7280; flex: 1; }
+    .demo-pass { color: #9ca3af; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; }
+
+    /* Footer */
+    .login-footer {
+      text-align: center; margin-top: 28px;
+      font-size: 11px; color: #b0b0b0;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1200px) {
+      .login-wrapper { grid-template-columns: 65% 35%; }
+      .left-panel { padding: 50px 60px; }
+      .features-row { grid-template-columns: repeat(2, 1fr); }
+      .trust-bar { padding: 16px 60px; }
+    }
+
+    @media (max-width: 1024px) {
+      .login-wrapper { grid-template-columns: 1fr; }
+      .left-panel { display: none; }
+      .right-panel { padding: 40px 24px; }
+      .login-container { max-width: 420px; }
+      .mobile-brand {
+        display: flex !important; flex-direction: column; align-items: center; margin-bottom: 28px;
+      }
+      .mobile-brand-icon {
+        width: 52px; height: 52px; border-radius: 14px;
+        background: linear-gradient(135deg, #00A86B, #008F5B);
+        display: flex; align-items: center; justify-content: center;
+        margin-bottom: 12px; box-shadow: 0 8px 28px rgba(0,168,107,0.25);
+      }
+      .mobile-brand-icon i { font-size: 22px; color: #fff; }
+      .mobile-brand h1 { font-size: 28px; font-weight: 800; color: #111827; }
+      .mobile-brand p { font-size: 12px; color: #00A86B; margin-top: 4px; font-weight: 500; }
+    }
+
+    @media (max-width: 640px) {
+      .right-panel { padding: 28px 18px; }
+      .demo-item { padding: 8px 10px; font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-wrapper">
+    <!-- ====================== LEFT PANEL (70%) ====================== -->
+    <div class="left-panel">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="grid-pattern"></div>
+
+      <div class="dna-overlay">
+        <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100,0 Q200,100 100,200 Q0,300 100,400 Q200,500 100,600 Q0,700 100,800" fill="none" stroke="white" stroke-width="2"/>
+          <path d="M200,0 Q100,100 200,200 Q300,300 200,400 Q100,500 200,600 Q300,700 200,800" fill="none" stroke="white" stroke-width="2"/>
+          <line x1="120" y1="50" x2="180" y2="50" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="105" y1="100" x2="195" y2="100" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="110" y1="150" x2="190" y2="150" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="100" y1="200" x2="200" y2="200" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="110" y1="250" x2="190" y2="250" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="105" y1="300" x2="195" y2="300" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="120" y1="350" x2="180" y2="350" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="100" y1="400" x2="200" y2="400" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="120" y1="450" x2="180" y2="450" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="105" y1="500" x2="195" y2="500" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="110" y1="550" x2="190" y2="550" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="100" y1="600" x2="200" y2="600" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="110" y1="650" x2="190" y2="650" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="105" y1="700" x2="195" y2="700" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="120" y1="750" x2="180" y2="750" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <path d="M600,0 Q700,100 600,200 Q500,300 600,400 Q700,500 600,600 Q500,700 600,800" fill="none" stroke="white" stroke-width="1.5"/>
+          <path d="M700,0 Q600,100 700,200 Q800,300 700,400 Q600,500 700,600 Q800,700 700,800" fill="none" stroke="white" stroke-width="1.5"/>
+          <line x1="620" y1="50" x2="680" y2="50" stroke="white" stroke-width="1" opacity="0.35"/>
+          <line x1="605" y1="100" x2="695" y2="100" stroke="white" stroke-width="1" opacity="0.35"/>
+          <line x1="610" y1="200" x2="690" y2="200" stroke="white" stroke-width="1" opacity="0.35"/>
+          <line x1="600" y1="300" x2="700" y2="300" stroke="white" stroke-width="1" opacity="0.35"/>
+          <line x1="610" y1="400" x2="690" y2="400" stroke="white" stroke-width="1" opacity="0.35"/>
+          <line x1="620" y1="500" x2="680" y2="500" stroke="white" stroke-width="1" opacity="0.35"/>
+          <line x1="605" y1="600" x2="695" y2="600" stroke="white" stroke-width="1" opacity="0.35"/>
+          <line x1="610" y1="700" x2="690" y2="700" stroke="white" stroke-width="1" opacity="0.35"/>
+        </svg>
+      </div>
+
+      <div class="left-content">
+        <div class="version-pill">
+          <span class="dot"></span>
+          System Online &mdash; v3.0
+        </div>
+
+        <div class="brand-logo">
+          <div class="brand-logo-icon"><i class="fas fa-dna"></i></div>
+          <div>
+            <div class="brand-logo-text">BioR</div>
+            <div class="brand-logo-sub">Biological Response Network</div>
+          </div>
+        </div>
+
+        <h1 class="hero-headline">
+          National Biosurveillance<br>
+          &amp; <span class="highlight">Early Warning</span> Platform
+        </h1>
+
+        <p class="hero-desc">
+          AI-powered genomic threat detection, epidemic intelligence, and real-time
+          surveillance across 13 regions. Protecting public health with next-generation
+          bioinformatics and multi-layer early warning systems.
+        </p>
+
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-number">1,247</div>
+            <div class="stat-label">Active Cases</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24</div>
+            <div class="stat-label">Monitoring Sites</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">856</div>
+            <div class="stat-label">Genomic Sequences</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">13</div>
+            <div class="stat-label">Regions Covered</div>
+          </div>
+        </div>
+
+        <div class="features-row">
+          <div class="feature-card">
+            <div class="feature-icon genomic"><i class="fas fa-microscope"></i></div>
+            <div class="feature-title">Genomic Analysis</div>
+            <div class="feature-desc">Real-time sequencing with AMR detection &amp; phylogenetic tracking</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon threat"><i class="fas fa-shield-virus"></i></div>
+            <div class="feature-title">Threat Detection</div>
+            <div class="feature-desc">ML-powered early warning with OSINT intelligence feeds</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon analytics"><i class="fas fa-chart-line"></i></div>
+            <div class="feature-title">Analytics &amp; Reports</div>
+            <div class="feature-desc">Epidemiological dashboards with automated situation reports</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon surveillance"><i class="fas fa-satellite-dish"></i></div>
+            <div class="feature-title">Surveillance Network</div>
+            <div class="feature-desc">24 sites across 13 regions with real-time data streaming</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-bar">
+        <div class="trust-bar-left">
+          <div class="trust-item"><i class="fas fa-shield-halved"></i> SOC 2 Compliant</div>
+          <div class="trust-item"><i class="fas fa-lock"></i> End-to-End Encrypted</div>
+          <div class="trust-item"><i class="fas fa-server"></i> 99.99% Uptime</div>
+          <div class="trust-item"><i class="fas fa-globe-americas"></i> Edge Network</div>
+        </div>
+        <div class="trust-bar-right">&copy; 2026 BioR Platform</div>
+      </div>
+    </div>
+
+    <!-- ====================== RIGHT PANEL (30%) ====================== -->
+    <div class="right-panel">
+      <div class="login-container">
+        <div class="mobile-brand" style="display:none">
+          <div class="mobile-brand-icon"><i class="fas fa-dna"></i></div>
+          <h1>BioR</h1>
+          <p>Biological Response Network</p>
+        </div>
+
+        <div class="login-header">
+          <h2>Sign In</h2>
+          <p>Access the biosurveillance platform</p>
+        </div>
+
+        <div id="successMessage">
+          <i class="fas fa-check-circle"></i>
+          <span id="successText">Login successful! Redirecting...</span>
+        </div>
+
+        <div id="errorMessage">
+          <i class="fas fa-exclamation-circle"></i>
+          <span id="errorText">Invalid credentials. Please try again.</span>
+        </div>
+
+        <form id="loginForm" autocomplete="on">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <div class="input-wrapper">
+              <input type="text" id="username" name="username" placeholder="Enter your username" autocomplete="username" />
+              <span class="input-icon"><i class="fas fa-user"></i></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password" />
+              <span class="input-icon"><i class="fas fa-lock"></i></span>
+              <button type="button" class="eye-toggle" onclick="togglePassword()" title="Show/Hide password">
+                <i id="pwToggleIcon" class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="loginBtn">
+            <span class="btn-text"><i class="fas fa-sign-in-alt" style="margin-right:8px"></i>Sign In</span>
+            <span class="btn-spinner"><i class="fas fa-circle-notch fa-spin" style="font-size:16px"></i></span>
+          </button>
+        </form>
+
+        <div class="divider"><span>Demo Accounts</span></div>
+
+        <div class="demo-accounts">
+          <div class="demo-item" onclick="fillCredentials('admin','BioR2026!')">
+            <span class="demo-badge"><i class="fas fa-user-shield"></i></span>
+            <span class="demo-role">Admin</span>
+            <span class="demo-user">admin</span>
+            <span class="demo-pass">BioR2026!</span>
+          </div>
+          <div class="demo-item" onclick="fillCredentials('analyst','Analyst2026!')">
+            <span class="demo-badge"><i class="fas fa-chart-bar"></i></span>
+            <span class="demo-role">Analyst</span>
+            <span class="demo-user">analyst</span>
+            <span class="demo-pass">Analyst2026!</span>
+          </div>
+          <div class="demo-item" onclick="fillCredentials('viewer','Viewer2026!')">
+            <span class="demo-badge"><i class="fas fa-eye"></i></span>
+            <span class="demo-role">Viewer</span>
+            <span class="demo-user">viewer</span>
+            <span class="demo-pass">Viewer2026!</span>
+          </div>
+        </div>
+
+        <div class="login-footer">BioR Platform v3.0 &bull; Genomics &amp; Biosurveillance</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- External auth script -->
+  <script src="js/auth.js"></script>
+
+  <script>
+    // ===== Toggle Password Visibility =====
+    function togglePassword() {
+      var pw = document.getElementById('password');
+      var icon = document.getElementById('pwToggleIcon');
+      if (pw.type === 'password') { pw.type = 'text'; icon.className = 'fas fa-eye-slash'; }
+      else { pw.type = 'password'; icon.className = 'fas fa-eye'; }
+    }
+
+    // ===== Fill Credentials =====
+    function fillCredentials(username, password) {
+      var uEl = document.getElementById('username');
+      var pEl = document.getElementById('password');
+      uEl.value = username; pEl.value = password; uEl.focus();
+      uEl.style.borderColor = '#00A86B'; uEl.style.boxShadow = '0 0 0 3px rgba(0,168,107,0.15)';
+      pEl.style.borderColor = '#00A86B'; pEl.style.boxShadow = '0 0 0 3px rgba(0,168,107,0.15)';
+      setTimeout(function() {
+        uEl.style.borderColor = ''; uEl.style.boxShadow = '';
+        pEl.style.borderColor = ''; pEl.style.boxShadow = '';
+      }, 800);
+    }
+
+    // ===== Form Submit =====
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var username = document.getElementById('username').value.trim();
+      var password = document.getElementById('password').value;
+      var btn = document.getElementById('loginBtn');
+      var successMsg = document.getElementById('successMessage');
+      var errorMsg = document.getElementById('errorMessage');
+      var errorText = document.getElementById('errorText');
+
+      successMsg.classList.remove('show');
+      errorMsg.classList.remove('show');
+
+      if (!username || !password) {
+        errorText.textContent = 'Please enter both username and password.';
+        errorMsg.classList.add('show');
+        return;
+      }
+
+      btn.classList.add('loading');
+
+      setTimeout(function() {
+        var result = validateCredentials(username, password);
+        if (result) {
+          localStorage.setItem('bior_user', result.username);
+          localStorage.setItem('bior_role', result.role);
+          localStorage.setItem('bior_name', result.name);
+          localStorage.setItem('bior_session', JSON.stringify({
+            user: result, token: result.token, loginTime: new Date().toISOString()
+          }));
+          localStorage.setItem('bior_auth', JSON.stringify({ user: result, token: result.token }));
+          btn.classList.remove('loading');
+          successMsg.classList.add('show');
+          setTimeout(function() { window.location.href = 'index.html'; }, 1500);
+        } else {
+          btn.classList.remove('loading');
+          errorText.textContent = 'Invalid username or password. Please try again.';
+          errorMsg.classList.add('show');
+        }
+      }, 1800);
+    });
+
+    // ===== Auto-focus username =====
+    document.addEventListener('DOMContentLoaded', function() {
+      var u = document.getElementById('username');
+      if (u) u.focus();
+    });
+  </script>
+</body>
+</html>
