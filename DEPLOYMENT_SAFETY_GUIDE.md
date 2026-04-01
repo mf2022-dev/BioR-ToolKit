@@ -14,6 +14,7 @@ is deploying the wrong code to the wrong Cloudflare project.
 | CF Project Name | Domain | What It Is | GitHub Repo | Has D1 DB? | Secrets |
 |---|---|---|---|---|---|
 | `bior` | **bior.tech**, www.bior.tech | Main BioR Platform (SPA) — sign-in, dashboard, hub, ALL features | `mf2022-dev/BioR` | YES (`bior-production`) | JWT_SECRET, LOCKDOWN_MODE, SITE_ACCESS_KEY |
+| `tabletap` | **tabletap-axb.pages.dev** | TableTap War Games KB — 20 pandemic exercise cards (linked from BioR hub) | `mf2022-dev/TableTap-WG` | No | None |
 | `data-library` | **data-library.bior.tech** | RAND-ENGIN Dashboard (standalone) | `mf2022-dev/RAND-ENGIN` | No | None |
 | `bior-data-library` | data.bior.tech | Older data library (may be deprecated) | — | — | — |
 | `adc-research-ibdaa-2026` | bioalfa.net | ADC Research platform | — | — | — |
