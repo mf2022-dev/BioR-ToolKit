@@ -24,15 +24,19 @@ is deploying the wrong code to the wrong Cloudflare project.
 ### The Golden Rule
 
 ```
-bior.tech        = ONLY deploy from github.com/mf2022-dev/BioR
-                   ONLY use: --project-name bior
+bior.tech                = ONLY deploy from /home/user/bior-toolkit (github.com/mf2022-dev/BioR)
+                           ONLY use: --project-name bior
 
-data-library.bior.tech = ONLY deploy from github.com/mf2022-dev/RAND-ENGIN
-                          ONLY use: --project-name data-library
+tabletap-axb.pages.dev   = ONLY deploy from /home/user/webapp (github.com/mf2022-dev/TableTap-WG)
+                           ONLY use: --project-name tabletap
+
+data-library.bior.tech   = ONLY deploy from github.com/mf2022-dev/RAND-ENGIN
+                           ONLY use: --project-name data-library
 ```
 
+**NEVER deploy webapp/TableTap code to `--project-name bior`** (this destroys bior.tech!)
+**NEVER deploy BioR code to `--project-name tabletap`** (this destroys TableTap!)
 **NEVER deploy RAND-ENGIN code to `--project-name bior`**
-**NEVER deploy BioR code to `--project-name data-library`**
 
 ---
 
