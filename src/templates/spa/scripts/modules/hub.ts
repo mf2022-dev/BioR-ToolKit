@@ -255,7 +255,7 @@ function renderProjectHub() {
       '<div class="hub-section hub-sec-kb">' +
         '<div class="hub-section-header">' +
           '<div class="hub-section-label">' +
-            '<div class="hub-section-title"><i class="fas fa-book-open"></i> Knowledge Bases<span class="hub-section-count">3</span></div>' +
+            '<div class="hub-section-title"><i class="fas fa-book-open"></i> Knowledge Bases<span class="hub-section-count">4</span></div>' +
             '<div class="hub-section-desc">Regulatory frameworks, benchmarks &amp; structured reference data for compliance and evaluation</div>' +
           '</div>' +
         '</div>' +
@@ -305,6 +305,23 @@ function renderProjectHub() {
             '<div class="hub-dl-card-actions">' +
               '<button class="hub-dl-btn hub-dl-btn-explore" style="background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff" data-ext-url="https://psef-x.bior.tech/" onclick="event.stopPropagation();openExtUrl(this.dataset.extUrl)"><i class="fas fa-external-link-alt"></i> Explore</button>' +
             '</div>' +
+          '</div>' +
+          '<div class="hub-dl-card" style="border-color:rgba(0,168,107,0.15);border-top:3px solid #00A86B" data-ext-url="https://pandemic-strategy.pages.dev/countries" onclick="openExtUrl(this.dataset.extUrl)">' +
+            '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><div style="width:44px;height:44px;border-radius:10px;background:rgba(0,168,107,0.15);display:flex;align-items:center;justify-content:center"><i class="fas fa-globe" style="color:#00A86B;font-size:16px"></i></div><span style="position:absolute;top:12px;right:12px;background:rgba(0,168,107,0.1);color:#00A86B;font-size:9px;font-weight:600;padding:3px 8px;border-radius:6px;border:1px solid rgba(0,168,107,0.2)"><i class="fas fa-external-link-alt" style="margin-right:3px;font-size:7px"></i>Live</span></div>' +
+            '<div class="hub-dl-card-name"><span style="background:linear-gradient(135deg,#006C35,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Pandemic</span><span style="color:rgba(255,255,255,0.4);font-weight:400"> | </span><span style="background:linear-gradient(135deg,#006C35,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Strategy</span></div>' +
+            '<div class="hub-dl-card-desc">Global Pandemic Preparedness Benchmark — 23 national strategies scored across 10 dimensions. UK base reference + 22 peer nations. Interactive guides, heatmap, ranking &amp; comparison tools.</div>' +
+            '<div class="hub-dl-progress"><div class="hub-dl-progress-bar" style="width:100%;background:linear-gradient(90deg,#006C35,#22c55e)"></div></div>' +
+            '<div class="hub-dl-card-meta">' +
+              '<span class="hub-dl-card-tag"><i class="fas fa-flag"></i>23 Nations</span>' +
+              '<span class="hub-dl-card-tag"><i class="fas fa-chart-bar"></i>10 Dimensions</span>' +
+              '<span class="hub-dl-card-tag"><i class="fas fa-trophy"></i>🇬🇧 #1 Ranked</span>' +
+              '<span class="hub-dl-card-tag"><i class="fas fa-globe"></i>Global</span>' +
+            '</div>' +
+            '<div class="hub-dl-card-actions">' +
+              '<button class="hub-dl-btn hub-dl-btn-explore" style="background:linear-gradient(135deg,#006C35,#22c55e);color:#fff" data-ext-url="https://pandemic-strategy.pages.dev/countries" onclick="event.stopPropagation();openExtUrl(this.dataset.extUrl)"><i class="fas fa-eye"></i> Explore</button>' +
+              
+            '</div>' +
+          '</div>' +          
           '</div>' +
         '</div>' +
       '</div>' +
